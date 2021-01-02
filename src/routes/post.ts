@@ -26,4 +26,35 @@ router.get('/:id', async (req, res)=>{
 })
 
 
+router.post('/', async (req, res)=>{
+    try {
+        const orm = await ORM()
+        const {title} = req.body
+        const post = orm.em.create(Post, {title})
+        await orm.em.persistAndFlush(post)
+        return res.send(post)
+    } catch (error) {
+        console.error(error)
+        return res.status(402).json({error: error})
+    }
+})
+
+router.patch('/:id', async (req, res)=>{
+    try {
+        const orm = await ORM()
+        const {title} = req.body
+        const id = parseInt(req.params.id)
+        const post = await orm.em.findOne(Post, {id})
+        if(!post){
+            return res.status(402).json({error: 'no post found'})
+        }
+        post.title = title
+        await orm.em.persistAndFlush(post)
+        return res.send(post)
+    } catch (error) {
+        console.error(error)
+        return res.status(402).json({error: error})
+    }
+})
+
 export default router

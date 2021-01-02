@@ -36,5 +36,36 @@ router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(402).json({ error: error });
     }
 }));
+router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orm = yield index_1.ORM();
+        const { title } = req.body;
+        const post = orm.em.create(Post_1.Post, { title });
+        yield orm.em.persistAndFlush(post);
+        return res.send(post);
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(402).json({ error: error });
+    }
+}));
+router.patch('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orm = yield index_1.ORM();
+        const { title } = req.body;
+        const id = parseInt(req.params.id);
+        const post = yield orm.em.findOne(Post_1.Post, { id });
+        if (!post) {
+            return res.status(402).json({ error: 'no post found' });
+        }
+        post.title = title;
+        yield orm.em.persistAndFlush(post);
+        return res.send(post);
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(402).json({ error: error });
+    }
+}));
 exports.default = router;
 //# sourceMappingURL=post.js.map
