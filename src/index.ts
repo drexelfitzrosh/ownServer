@@ -1,11 +1,12 @@
-import { MikroORM } from '@mikro-orm/core'
-import microOrmConfig from './mikro-orm.config'
+
 import express from 'express'
 import bodyParser from 'body-parser'
+import { ORM } from './utils'
+import post from './routes/post'
 
 
 const main =async ()=>{
-    const orm = await MikroORM.init(microOrmConfig)
+    const orm = await ORM()
     await orm.getMigrator().up()
 
     const app = express()
@@ -17,9 +18,13 @@ const main =async ()=>{
         }
     }));
 
+    app.use('/post', post)
+
     app.get('/', (_, res)=>{
         res.send('hello world')
     })
+
+
 
 
 
