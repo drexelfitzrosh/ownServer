@@ -57,4 +57,15 @@ router.patch('/:id', async (req, res)=>{
     }
 })
 
+router.delete('/:id', async (req, res)=>{
+    try {
+        const orm = await ORM()
+        const id = parseInt(req.params.id)
+        await orm.em.nativeDelete(Post, {id})
+        return res.send({deleted: true})
+    } catch (error) {
+        return res.status(402).json({error: error})
+    }
+})
+
 export default router

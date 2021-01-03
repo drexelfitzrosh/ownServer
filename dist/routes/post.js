@@ -67,5 +67,16 @@ router.patch('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return res.status(402).json({ error: error });
     }
 }));
+router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const orm = yield index_1.ORM();
+        const id = parseInt(req.params.id);
+        yield orm.em.nativeDelete(Post_1.Post, { id });
+        return res.send({ deleted: true });
+    }
+    catch (error) {
+        return res.status(402).json({ error: error });
+    }
+}));
 exports.default = router;
 //# sourceMappingURL=post.js.map
