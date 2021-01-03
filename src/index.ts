@@ -3,6 +3,8 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import { ORM } from './utils'
 import post from './routes/post'
+import user from './routes/user'
+
 
 
 const main =async ()=>{
@@ -19,12 +21,11 @@ const main =async ()=>{
     }));
 
     app.use('/post', post)
+    app.use('/auth', user)
 
     app.get('/', (_, res)=>{
         res.send('hello world')
     })
-
-
 
 
 

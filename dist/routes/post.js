@@ -15,8 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Post_1 = require("../enteties/Post");
 const index_1 = require("../utils/index");
+const index_2 = require("../utils/index");
 const router = express_1.default.Router();
-router.get('/', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/', index_2.Auth, (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield index_1.ORM();
     const post = yield orm.em.find(Post_1.Post, {});
     return res.send(post);

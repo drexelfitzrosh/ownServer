@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const utils_1 = require("./utils");
 const post_1 = __importDefault(require("./routes/post"));
+const user_1 = __importDefault(require("./routes/user"));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield utils_1.ORM();
     yield orm.getMigrator().up();
@@ -27,6 +28,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         }
     }));
     app.use('/post', post_1.default);
+    app.use('/auth', user_1.default);
     app.get('/', (_, res) => {
         res.send('hello world');
     });
